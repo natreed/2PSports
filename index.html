@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <title>Bootstrap Agency Page Template</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
+
+    <!-- Jquery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDYNJ77XMQT9VcX61YKBxCD4-eUzA4ZfE"></script>
+    <style>
+      /* styling for popup boxes */
+      #genderSelect {
+        margin-bottom: 20px;
+      }
+
+      #map-canvas {
+        height: 500px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+
+      #mapRow {
+        text-align: center;
+      }
+
+      /* Hiding the boxes which I show when I troubleshoot */
+      #latbox, #longbox {
+        display: none;
+      }
+
+
+
+
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active"> <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#">Link</a> </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Dropdown </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a> 
+            </div>
+          </li>
+          <li class="nav-item"> <a class="nav-link disabled" href="#">Disabled</a> </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <p id="navWelcome" style="margin-right:20px; margin-top:10px">welcome</p>
+          <button id="navSignInButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" style="margin-right:10px; opacity:.3">Sign-in</button>
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    <header id="header">
+      <div class="jumbotron">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h1 class="text-center">Lorem ipsum dolor sit amet</h1>
+              <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, dicta, cupiditate consequatur necessitatibus quos libero eius ipsum qui sit molestiae.</p>
+              <p>&nbsp;</p>
+              <p class="text-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+                Login
+                </button>
+              </p>
+
+              <!--type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mb-4 mt-2 text-center">
+            <h2>ABOUT US</h2>
+          </div>
+        </div>
+      </div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <h3>Lorem ipsum</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <h3>Lorem ipsum dolor</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <h3>Lorem ipsum dolor</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <h3>Lorem ipsum</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <h3>Lorem ipsum dolor</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <h3>Lorem ipsum</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          </div>
+        </div>
+
+        <!--map canvas-->
+        <div class="row" id="mapRow">
+          <div id="map-canvas"  ></div>
+        </div>
+
+        <div id="latbox"></div>
+        <div id="longbox"></div>
+        <!--end map canvas-->
+
+
+        <div class="row">
+          <div >
+            <button id="mapSubmitButton" type="button" class="btn btn-primary" >Submit Location</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 mt-4 mb-2 text-left">
+            <div class="main">
+              <h2>Instructions</h2>
+              <p>If you allowed the site access to your location, you should see it indicated above with a red arrow. If you said no but want to change your mind just click <a href="http://augmenting.me/water/mapit.html">here</a> and choose "Yes" when prompted.</p>
+              <p>
+                You can drag
+                the arrow around if you need to adjust the location. Once you get it in the right place, click on the button below to start submitting your water quality information.</p>
+              <a  id="linkurl" class="btn" href="http://augmenting.me">NEXT</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-lg-6">
+            <blockquote class="blockquote">
+              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
+            </blockquote>
+          </div>
+          <div class="col-sm-6 col-lg-6">
+            <blockquote class="blockquote">
+              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
+            </blockquote>
+          </div>
+          <div class="col-sm-6 col-lg-6">
+            <blockquote class="blockquote">
+              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
+            </blockquote>
+          </div>
+          <div class="col-sm-6 col-lg-6">
+            <blockquote class="blockquote">
+              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
+            </blockquote>
+          </div>
+        </div>
+      </div>
+      <div class="jumbotron">
+        <div class="container">
+          <div class="row">
+            <div class="text-center col-md-8 col-12 mx-auto">
+              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, praesentium, autem, veritatis error quidem eos fuga atque asperiores magnam deleniti necessitatibus sequi</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 col-auto mx-auto"> <a class="btn btn-block btn-lg btn-success" href="#" title="">Sign up now!</a> </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">		
+          <div class="col-12 mb-2 text-center">
+
+          </div>
+        </div>
+      </div>
+		
+		
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mb-2 text-center">
+            <h2>OUR SERVICES</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-lg-4">
+            <h3>Feature Description</h3>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt impedit est voluptatem doloremque architecto corporis suscipit quidem ratione! Quis laborum nam optio dolorem doloremque ex nobis quibusdam ad quo dolores? </p>
+            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <h3>Feature Description</h3>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate, illo, libero esse assumenda culpa consequatur exercitationem beatae odio praesentium nihil iste ipsum reiciendis pariatur. Recusandae, reiciendis quidem eaque aut ab. </p>
+            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <h3>Feature Description</h3>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, adipisci recusandae veniam laudantium distinctio temporibus eveniet dolorum earum iusto veritatis provident ducimus minima dolore quas vel omnis cumque voluptas quibusdam.</p>
+            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <h3>Feature Description</h3>
+            <p> <em class="icon-desktop "></em> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, earum rem nostrum provident repellat inventore laborum deleniti quas facere Quasi impedit autem qui cupiditate modi vero vitae dolorum nisi explicabo ea dolores animi. Inventore, omnis.</p>
+            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <h3>Feature Description</h3>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, iure, perspiciatis, ab ad quia animi esse repudiandae tempore quisquam dolorem sequi voluptatum qui fugiat. Quasi impedit autem qui cupiditate iusto?</p>
+            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <h3>Feature Description</h3>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, aut, hic laudantium reprehenderit sapiente nemo consequatur corrupti accusantium! Hic, non rerum nihil reprehenderit excepturi explicabo error tempore aliquam eveniet odit.</p>
+            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+          <div class="jumbotron">
+            <div class="row text-center">
+              <div class="text-center col-12">
+                <h2>Request a free quote</h2>
+              </div>
+              <div class="text-center col-12">
+                 CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form
+                <form id="feedbackForm" class="text-center">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" aria-describedby="nameHelp">
+                    <span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">E-Mail</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" aria-describedby="emailHelp">
+                    <span id="emailHelp" class="form-text text-muted" style="display: none;">Please enter a valid e-mail address.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea rows="10" cols="100" class="form-control" id="message" name="message" placeholder="Message" aria-describedby="messageHelp"></textarea>
+                    <span id="messageHelp" class="form-text text-muted" style="display: none;">Please enter a message.</span>
+                  </div>
+                  <button type="submit" id="feedbackSubmit" class="btn btn-primary btn-lg"> Send</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--end login original-->
+
+    <!-- Button trigger modal bootstrap triggers on Login button -->
+
+    <!-- login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="bootstrap_modal_centered" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="login">Login</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm" class="text-center">
+              <div class="form-group">
+                <input type="text" class="form-control" id="loginName" name="name" placeholder="Name" aria-describedby="nameHelp">
+                <span id="login_nameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Email Address" aria-describedby="emailHelp">
+                <span id="loginEmailHelp" class="form-text text-muted" style="display: none;">Please enter a valid e-mail address.</span>
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="loginPassword" aria-describedby="loginPassword">
+                <span id="login_messageHelp" class="form-text text-muted" style="display: none;">Please enter a message.</span>
+              </div>
+            </form>
+            <button id="loginGetStartedButton" type="button" class="btn btn-primary">Get Started</button>
+          </div>
+          <div class="modal-footer">
+            <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="signupButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">Sign up</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- end login modal-->
+
+
+    <!-- signup Modal bootstrap modal: getbootstrap.com/docs/4.0/components/modal/-->
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="bootstrap_modal_centered" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="signupTitle">Sign up</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="signupform" class="text-center">
+              <div class="form-group">
+                <input type="text" class="form-control" id="signupName" name="signupName" placeholder="your name here" aria-describedby="nameHelp">
+                <span id="signupNameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" id="signupEmail" name="signupEmail" placeholder="email address" aria-describedby="emailHelp">
+                <span id="signupEmailHelp" class="form-text text-muted" style="display: none;">Please enter a valid e-mail address.</span>
+              </div>
+
+              <!--gender selection: get bootstrap forms -->
+              <select id="signupGenderSelect" class="form-control">
+                <option aria-checked="true" value="male">male</option>
+                <option value="female">female</option>
+                <option value="other">other</option>
+              </select>
+              <!-- end gender selection -->
+
+              <div class="form-group">
+                <input type="signupPassword" class="form-control" id="signupPassword" name="signupPassword" placeholder="password" aria-describedby="password">
+                <span id="signupPasswordHelp" class="form-text text-muted" style="display: none;">Enter a password.</span>
+              </div>
+            </form>
+            <button id="signupGetStartedButton" type="button" class="btn btn-primary">Get Started</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: left;">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="skillModal" tabindex="-1" role="dialog" aria-labelledby="bootstrap_modal_centered" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="Title">Skill Level</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 20px">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="skillform" class="text-center">
+              <select id="skillSelect" class="form-control">
+                <option>beginner</option>
+                <option>ok</option>
+                <option>advanced</option>
+              </select>
+            </form>
+            <button id="skillSubmit" type="button" class="btn btn-primary">Set marker</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: left;">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- endsign up modal-->
+
+
+
+    <!-- get Started -->
+
+    <footer class="text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <p>Copyright © MyWebsite. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+    <!--<script src="js/jquery-3.3.1.min.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed --> 
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap-4.0.0.js"></script>
+    <script src="js/front.js"></script>
+
+
+  </body>
+</html>
