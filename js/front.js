@@ -176,7 +176,7 @@ $('#tennisImgButton').on('click', function(e) {
         alert("Sign in or sign up to get started!")
     }
     else {
-        currentSport = "tennis"
+        currentSport = "tennis";
         var len = Object.keys(customerMarkers).length;
         if (len !== 0) {
             for (var i = 0; i < len; i++) {
@@ -200,6 +200,9 @@ $('#tennisImgButton').on('click', function(e) {
             }
             id = 0;
         }
+        $('#tennisLabel').css({'color':'red'});
+        $('#pingpongLabel').css({'color':'black'})
+        $('#squashLabel').css({'color':'black'})
         $('#skillModal').modal('show');
     }
 });
@@ -236,6 +239,9 @@ $('#ping-pongImgButton').on('click', function(e) {
             }
             id = 0;
         }
+        $('#tennisLabel').css({'color':'black'});
+        $('#pingpongLabel').css({'color':'red'})
+        $('#squashLabel').css({'color':'black'})
         $('#skillModal').modal('show');
     }
 
@@ -273,6 +279,9 @@ $('#squashImgButton').on('click', function(e) {
             }
             id = 0;
         }
+        $('#tennisLabel').css({'color':'black'});
+        $('#pingpongLabel').css({'color':'black'})
+        $('#squashLabel').css({'color':'red'})
         $('#skillModal').modal('show');
     }
 });
@@ -377,10 +386,11 @@ objectSocket.on('pinData', function (objectData) {
 
 
 //++++++++++++++++++++++++++Map Render++++++++++++++++++++++++++++++++++++++
-//  Based on: https://gist.github.com/woodwardtw/186b8633df8583d86f36
+//
 
 /**
  * Submits pins for customers sport of choice
+ * Based on: https://gist.github.com/woodwardtw/186b8633df8583d86f36
  */
 $('#mapSubmitButton').on('click', function(e) {
     var latLngs = [];
@@ -414,7 +424,6 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
 
-
     // Try HTML5 geolocation to get location
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -433,20 +442,13 @@ function initialize() {
                 },
             });
 
-            //gets the pre-drag lat/long coordinates as a pair
-            document.getElementById("latbox").innerHTML=marker.getPosition().lat();
-
             //gets the pre-drag latlong coordinate
-            document.getElementById("latbox").innerHTML=marker.getPosition().lat();
-            document.getElementById("longbox").innerHTML=marker.getPosition().lng();
             lturl=marker.getPosition().lat();
             lngurl=marker.getPosition().lng();
             linkurl=baseurl.concat(lturl,comma,lngurl);
 
             //gets the new latlong if the marker is dragged
             google.maps.event.addListener(marker, "drag", function(){
-                document.getElementById("latbox").innerHTML=marker.getPosition().lat();
-                document.getElementById("longbox").innerHTML=marker.getPosition().lng();
                 lturl=marker.getPosition().lat();
                 lngurl=marker.getPosition().lng();
                 linkurl=baseurl.concat(lturl,comma,lngurl);
@@ -464,8 +466,6 @@ function initialize() {
                     }
                     else {
                         var latLng = {lat: lturl, lng: lngurl}
-                        // objectSocket.emit("clientInfoRequest",
-                        //     {id: customerId, lat: lturl, lng: lngurl, skill: skillLevel, sport: currentSport});
                         addMarker(latLng, "", "customer")
                     }
 
@@ -474,10 +474,6 @@ function initialize() {
                     alert("Select sport to get started.")
                 }
             });
-
-
-
-
 
             map.setCenter(pos);
         }, function() {
