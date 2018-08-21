@@ -22,7 +22,8 @@ var io = socket(server.listen(process.env.PORT || 8080));
 let db = new sqlite3.Database('../db/clientDatabase.db');
 //Create customer info table
 db.run(
-    "CREATE TABLE if NOT EXISTS customerInfo (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+    "CREATE TABLE if NOT EXISTS customerInfo (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
         "name TEXT, " +
         "email TEXT, " +
         "gender TEXT, " +
@@ -31,11 +32,11 @@ db.run(
 )
 db.run (
     "CREATE TABLE if NOT EXISTS pins (" +
-    "     id INTEGER, " +
-    "     sport TEXT, " +
-    "     skill TEXT," +
-    "     lat Decimal(9,6)," +
-    "     lng Decimal(9,6));"
+    "     id INTEGER NOT NULL, " +
+    "     sport TEXT NOT NULL, " +
+    "     skill TEXT NOT NULL," +
+    "     lat Decimal(9,6) NOT NULL," +
+    "     lng Decimal(9,6) NOT NULL);"
 )
 db.close()
 
@@ -45,16 +46,36 @@ db.close()
 io.on('connection', function(objectSocket) {
     objectSocket.on('map_load', function (objectData) {
         //load all of the pin locations
-        var pins = [];
-        let db = new sqlite3.Database('../db/clientDatabase.db');
-        var sql = "SELECT name, email, gender, sport, skill, lat lng " +
-                    "FROM pins JOIN customerInfo;";
 
-        db.each(sql, {}, function(err, row) {
-            var pinData = {name: row.name, email: row.email, gender: row.gender, sport: row.sport, lat: row.lat, lng:row.lng};
-            pins.push(pinData);
+        var pins = [];
+        var pinData;
+        let db = new sqlite3.Database('../db/clientDatabase.db');
+        var sql = "SELECT name, email, gender, sport, skill, lat,lng " +
+                    "FROM pins JOIN customerInfo " +
+                    "ON customerInfo.id = pins.id AND pins.sport = :sport;";
+
+        db.all(sql,
+            {":sport": objectData.sport},
+            (err, rows) => {
+            if (err) {
+                io.emit('dbErr', {clientError: "unknown", msg: err.message});
+            }
+
+            for (var i=0; i < rows.length; i++) {
+                var pinData = {
+                    skill: rows[i].skill,
+                    name: rows[i].name,
+                    email: rows[i].email,
+                    gender: rows[i].gender,
+                    sport: rows[i].sport,
+                    lat: rows[i].lat,
+                    lng: rows[i].lng};
+                pins.push(pinData);
+            }
             io.emit('pinData', pins);
-        })
+        });
+
+        db.close()
     });
 
     objectSocket.on('disconnect', function () {
@@ -79,8 +100,30 @@ io.on('connection', function(objectSocket) {
                     io.emit('dbErr', {clientError: "emailExists", msg: err.message});
                 }
             }
-            console.log("A row has been inserted with rowid ${this.lastID}`");
-        });
+
+            let sql = "Select id, name, password From customerInfo " +
+                "WHERE customerInfo.email = :email " +
+                "AND customerInfo.password = :password";
+
+            db.get(sql,
+                {':email': signupData.email, ':password': signupData.password},
+                (err, row) => {
+                    if (err) {
+                        io.emit('dbErr', {clientError: "unknown", msg: err.message});
+                    }
+                    else if (row === undefined) {
+                        io.emit("dbErr", {clientError: "noRecordLogin", email: signupData.email})
+                    }
+                    else if (row.password !== signupData.password) {
+                        io.emit("dbErr", {clientError: "invalidPassword"});
+                    }
+                    else {
+                        customerId = row.id;
+                        io.emit('loginSuccess', {name: row.name, id: row.id})
+                        console.log("customer id: " + row.id);
+                    }
+                });
+        });;
 
         var sql = 'select * from customerInfo';
 
@@ -132,27 +175,30 @@ io.on('connection', function(objectSocket) {
         let db = new sqlite3.Database('../db/clientDatabase.db');
 
         //insert customer data
-        let insertSql = "INSERT INTO pins (id, sport, skill, lat, long) " +
-            "VALUES (:id, :sport, :skill, :lat, :long);";
+        let insertSql = "INSERT INTO pins (id, sport, skill, lat, lng) " +
+            "VALUES (:id, :sport, :skill, :lat, :lng);";
 
-        db.run(insertSql,
-            {
-              ':id':objectData.id,
-              ':sport':objectData.sport,
-              ':skill':objectData.skill,
-              ':lat': objectData.lat,
-              ':long': objectData.long
-            },
-            (err) => {
-                if (err) {
-                    io.emit('dbErr', {clientError: "unknown", msg: err.message});
-                }
+        for (var i = 0; i < objectData.latLngs.length; i++) {
+            db.run(insertSql,
+                {
+                    ':id':objectData.id,
+                    ':sport':objectData.sport,
+                    ':skill':objectData.skill,
+                    ':lat': objectData.latLngs[i].lat,
+                    ':lng': objectData.latLngs[i].lng
+                },
+                (err) => {
+                    if (err) {
+                        io.emit('dbErr', {clientError: "unknown", msg: err.message});
+                    }
 
-            });
+                });
+        }
 
-
+        //Send info back to client to create info window
         let sql = "SELECT name, gender, email  FROM customerInfo " +
             "WHERE id = :id";
+
         db.get(sql,
             {
                 ':id': objectData.id
@@ -162,7 +208,12 @@ io.on('connection', function(objectSocket) {
                     io.emit('dbErr', {clientError: "unknown", msg: err.message});
                 }
                 else {
-                    var data = {name: row.name, gender: row.gender, email: row.email, sport: objectData.sport, skill: objectData.skill};
+                    // var sl = 'select * from pins';
+                    // db.all(sl, [], (err, rows) => {
+                    //     console.log(rows);
+                    // })
+
+                    var data = {id: objectData.id , name: row.name, gender: row.gender, email: row.email, sport: objectData.sport, skill: objectData.skill};
                     console.log(data);
                     io.emit('pinContentResponse', data);
                 }
@@ -170,9 +221,6 @@ io.on('connection', function(objectSocket) {
         db.close();
 
     });
-
-
-
 });
 
 console.log('go ahead and open "http://localhost:8080/index.html" in your browser');

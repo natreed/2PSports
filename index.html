@@ -37,6 +37,14 @@
         display: none;
       }
 
+      #skillSubmit {
+        margin-top: 20px;
+      }
+
+      #infoWindowDiv {
+        width: 100px;
+      }
+
 
 
 
@@ -63,7 +71,7 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <p id="navWelcome" style="margin-right:20px; margin-top:10px">welcome</p>
-          <button id="navSignInButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" style="margin-right:10px; opacity:.3">Sign-in</button>
+          <button id="navSignOutButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" style="margin-right:10px; opacity:.3" disabled>Sign-out</button>
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -76,57 +84,56 @@
             <div class="col-12">
               <h1 class="text-center">Lorem ipsum dolor sit amet</h1>
               <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, dicta, cupiditate consequatur necessitatibus quos libero eius ipsum qui sit molestiae.</p>
-              <p>&nbsp;</p>
-              <p class="text-center">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-                Login
-                </button>
-              </p>
 
-              <!--type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"-->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <h1>Sign-in</h1>
+              <form id="loginForm" class="text-center">
+                <div class="form-group text-center">
+                  <input type="text" class="form-control" id="loginName" name="name" placeholder="name" aria-describedby="nameHelp">
+                  <span id="login_nameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" id="loginEmail" name="email" placeholder="email Address" aria-describedby="emailHelp">
+                  <span id="loginEmailHelp" class="form-text text-muted" style="display: none;">Please enter a valid e-mail address.</span>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="password" aria-describedby="loginPassword">
+                  <span id="login_messageHelp" class="form-text text-muted" style="display: none;">Please enter a message.</span>
+                </div>
+              </form>
+              <button id="loginGetStartedButton" type="button" class="btn btn-primary">Get Started</button>
+              <button id="signupButton" type="button" class="btn btn-outline-success float-right" data-toggle="modal" data-target="#signupModal">Sign up</button>
             </div>
           </div>
         </div>
       </div>
     </header>
-    <section>
+    <section >
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mb-4 mt-2 text-center">
-            <h2>ABOUT US</h2>
+            <h1>Click on your sport to see who's playing</h1>
           </div>
         </div>
       </div>
       <div class="container ">
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
-            <h3>Lorem ipsum</h3>
+            <img id="tennisImgButton" class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <h2>Tennis</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+          <div id="ping-pongImgButton" class="col-lg-4 col-md-6 col-sm-12 text-center">
             <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
-            <h3>Lorem ipsum dolor</h3>
+            <h2>Ping-pong</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+          <div id="squashImgButton" class="col-lg-4 col-md-6 col-sm-12 text-center">
             <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
-            <h3>Lorem ipsum dolor</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
-            <h3>Lorem ipsum</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
-            <h3>Lorem ipsum dolor</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
-            <h3>Lorem ipsum</h3>
+            <h2>Squash</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           </div>
         </div>
@@ -143,7 +150,7 @@
 
         <div class="row">
           <div >
-            <button id="mapSubmitButton" type="button" class="btn btn-primary" >Submit Location</button>
+            <button id="mapSubmitButton" type="button" class="btn btn-primary" disabled>Submit Locations</button>
           </div>
         </div>
         <div class="row">
@@ -197,16 +204,6 @@
           </div>
         </div>
       </div>
-
-      <div class="container">
-        <div class="row">		
-          <div class="col-12 mb-2 text-center">
-
-          </div>
-        </div>
-      </div>
-		
-		
       <div class="container">
         <div class="row">
           <div class="col-12 mb-2 text-center">
@@ -284,48 +281,6 @@
 
     <!--end login original-->
 
-    <!-- Button trigger modal bootstrap triggers on Login button -->
-
-    <!-- login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="bootstrap_modal_centered" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title" id="login">Login</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="loginForm" class="text-center">
-              <div class="form-group">
-                <input type="text" class="form-control" id="loginName" name="name" placeholder="Name" aria-describedby="nameHelp">
-                <span id="login_nameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>
-              </div>
-              <div class="form-group">
-                <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Email Address" aria-describedby="emailHelp">
-                <span id="loginEmailHelp" class="form-text text-muted" style="display: none;">Please enter a valid e-mail address.</span>
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="loginPassword" aria-describedby="loginPassword">
-                <span id="login_messageHelp" class="form-text text-muted" style="display: none;">Please enter a message.</span>
-              </div>
-            </form>
-            <button id="loginGetStartedButton" type="button" class="btn btn-primary">Get Started</button>
-          </div>
-          <div class="modal-footer">
-            <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button id="signupButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupModal">Sign up</button>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- end login modal-->
-
-
     <!-- signup Modal bootstrap modal: getbootstrap.com/docs/4.0/components/modal/-->
     <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="bootstrap_modal_centered" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -386,7 +341,7 @@
                 <option>advanced</option>
               </select>
             </form>
-            <button id="skillSubmit" type="button" class="btn btn-primary">Set marker</button>
+            <button id="skillSubmit" type="button" class="btn btn-primary">choose your locations</button>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: left;">Close</button>
@@ -404,7 +359,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <p>Copyright © MyWebsite. All rights reserved.</p>
+            <p>Copyright © LetsPlay. All rights reserved.</p>
           </div>
         </div>
       </div>
@@ -418,4 +373,24 @@
 
 
   </body>
+
+<!-- infoWindow format div -->
+<div id="infoWindowDiv">
+  <h2 id="infoWindowName"></h2>
+  <br>
+  <br>
+  <p id="infoWindowExperience"></p>
+  <br>
+  <br>
+  <p id="infoWindowGender"></p>
+  <br>
+  <br>
+  <p id="infoWindowTime"></p>
+  <br>
+  <br>
+  <p id="infoWindowEmail"></p>
+
+
+</div>
+
 </html>

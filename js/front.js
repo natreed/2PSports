@@ -5,10 +5,11 @@ var customerId;
 var customerName;
 var customerEmail;
 var currentSport = "tennis";
+var skillLevel;
 
 //map globals
 var map;
-var marker;
+
 var lngurl;
 var linkurl;
 var lturl;
@@ -16,9 +17,11 @@ var baseurl = "http://augmenting.me/geo/report/?coordinates=";
 var comma = ", ";
 
 //Map Marker functions
-var id;
+var customerMarkerId = 0;
+var id = 0;
 var markers = {};
-var addMarker = function (latLng, infoBoxText) {
+var customerMarkers = {};
+var addMarker = function (latLng, infoBoxText, markerGroup) {
     var image = {
         url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
         // This marker is 20 pixels wide by 32 pixels high.
@@ -29,42 +32,86 @@ var addMarker = function (latLng, infoBoxText) {
         anchor: new google.maps.Point(0, 32)
     };
 
-    marker = new google.maps.Marker({
-        position: latLng,
-        map: map,
-        draggable: true,
-        animation: google.maps.Animation.DROP,
-        icon: image
-    });
-    map.panTo(latLng);
-    id = marker.__gm_id;
-    markers[id] = marker;
-
-    google.maps.event.addListener(marker, "rightclick", function (point) { id = this.__gm_id; delMarker(id) });
-
     var infowindow = new google.maps.InfoWindow({content: infoBoxText});
 
-    marker.addListener('mouseover', function() {
-        infowindow.open(map, marker);
-    })
+    //if customer marker allow delete marker with right click
+    if (markerGroup === "customer") {
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            draggable: true,
+            zIndex: google.maps.Marker.MAX_ZINDEX + 1,
+            animation: google.maps.Animation.DROP,
+            infoWindow: {
+                maxWidth: 400,
+                content: ""
 
-    $('#skillModal').modal('hide');
+            },
+            icon: image
+        });
+
+        map.panTo(latLng);
+
+        customerMarkers[customerMarkerId] = marker;
+
+        console.log(customerMarkers);
+
+        //delete marker on right click
+        google.maps.event.addListener(marker, "rightclick", function (point) {
+            marker.setMap(null);
+            for (var i=0; i < Object.keys(customerMarkers).length; i++) {
+                if (customerMarkers[i].position.lat === marker.position.lat &&
+                    customerMarkers[i].position.lng === marker.position.lng)
+                {
+                    delMarker(id, "customer");
+                    console.log(customerMarkers);
+                    customerMarkerId = customerMarkerId - 1;
+                }
+            }
+        });
+
+        customerMarkerId = customerMarkerId + 1;
+    }
+    else  {
+        marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            animation: google.maps.Animation.DROP
+        });
+
+        map.panTo(latLng);
+
+        markers[id] = marker;
+        marker.addListener('doublclick', function() {
+            infowindow.open(map, marker);
+        })
+
+        id = id + 1;
+    }
 }
 
-var delMarker = function (id) {
-    marker = markers[id];
-    marker.setMap(null);
-}
+// Sets the map on all markers in the array.
 
-jQuery('#navSignInBtn').on('click', function(e) {
-    $('#loginModal').modal('show');
-});
+//Only deletes customer markers
+var delMarker = function (id, type) {
+    if (type == "customer")
+    {
+        marker = customerMarkers[id];
+        marker.setMap(null);
+        console.log("before delete: " + customerMarkers);
+        delete customerMarkers[id];
+        console.log("after delete: " + customerMarkers);
+    }
+    else {
+        marker.setMap(null);
+        marker = markers[id];
+
+    }
+}
 
 jQuery('#signupButton').on('click', function(e) {
     $('#loginModal').modal('hide');
 });
-
-
 
 
 //++++++++++++++++++++SIGNUP+++++++++++++++++++++++++
@@ -82,7 +129,7 @@ $('#signupGetStartedButton').on('click', function(e) {
         longtitude:null
     }
 
-    $('#loginModal').modal('show');
+    //$('#loginModal').modal('show');
     objectSocket.emit('signup', signupData);
 });
 
@@ -106,9 +153,130 @@ $('#loginGetStartedButton').on('click', function(e) {
         $('#loginModal').modal('show');
     }
     else {
-
         var loginData = {name: customerName, email: customerEmail, password:$('#loginPassword').val()}
         objectSocket.emit('login', loginData);
+    }
+});
+
+/**
+ * Logout button refreshes page.
+ */
+$('#navSignOutButton').on('click', function(e) {
+    if (e) {
+        console.log(e.message);
+    }
+
+    //true reloads from the server. Default is from cache.
+    location.reload(true);
+});
+
+//+++++++++++++++++++++++++Sport Option Buttons++++++++++++++++++++
+$('#tennisImgButton').on('click', function(e) {
+    if (e) {
+        console.log(e.message);
+    }
+    if (customerId === undefined) {
+        alert("Sign in or sign up to get started!")
+    }
+    else {
+        currentSport = "tennis"
+        var len = Object.keys(customerMarkers).length;
+        if (len !== 0) {
+            for (var i = 0; i < len; i++) {
+                var marker = customerMarkers[i.toString()];
+                marker.setMap(null);
+                console.log("before delete: " + customerMarkers);
+                delete customerMarkers[i.toString()];
+                console.log("after delete: " + customerMarkers);
+            }
+            customerMarkerId = 0;
+        }
+
+        var mlen = Object.keys(markers).length;
+        if (mlen  !== 0) {
+            for (var i = 0; i < mlen; i++) {
+                var marker = markers[i.toString()];
+                marker.setMap(null);
+                console.log("before delete: " + customerMarkers);
+                delete markers[i.toString()];
+                console.log("after delete: " + customerMarkers);
+            }
+            id = 0;
+        }
+        $('#skillModal').modal('show');
+    }
+});
+
+$('#ping-pongImgButton').on('click', function(e) {
+    if (e) {
+        console.log(e.message);
+    }
+    if (customerId === undefined) {
+        alert("Sign in or sign up to get started!")
+    }
+    else {
+        currentSport = "ping-pong";
+        var len = Object.keys(customerMarkers).length;
+        if (len !== 0) {
+            for (var i = 0; i < len; i++) {
+                marker = customerMarkers[i.toString()];
+                marker.setMap(null);
+                console.log("before delete: " + customerMarkers);
+                delete customerMarkers[i.toString()];
+                console.log("after delete: " + customerMarkers);
+            }
+            customerMarkerId = 0;
+        }
+
+        var mlen = Object.keys(markers).length;
+        if (mlen  !== 0) {
+            for (var i = 0; i < mlen; i++) {
+                var marker = markers[i.toString()];
+                marker.setMap(null);
+                console.log("before delete: " + customerMarkers);
+                delete markers[i.toString()];
+                console.log("after delete: " + customerMarkers);
+            }
+            id = 0;
+        }
+        $('#skillModal').modal('show');
+    }
+
+});
+
+$('#squashImgButton').on('click', function(e) {
+    if (e) {
+        console.log(e.message);
+    }
+    if (customerId === undefined) {
+        alert("Sign in or sign up to get started!")
+    }
+    else {
+        currentSport = "squash";
+        var len = Object.keys(customerMarkers).length;
+        if (len !== 0) {
+            for (var i = 0; i < len; i++) {
+                marker = customerMarkers[i.toString()];
+                marker.setMap(null);
+                console.log("before delete: " + customerMarkers);
+                delete customerMarkers[i.toString()];
+                console.log("after delete: " + customerMarkers);
+            }
+            customerMarkerId = 0;
+        }
+
+        var mlen = Object.keys(markers).length;
+        if (mlen  !== 0) {
+            for (var i = 0; i < mlen; i++) {
+                var marker = markers[i.toString()];
+                marker.setMap(null);
+                console.log("before delete: " + customerMarkers);
+                delete markers[i.toString()];
+                console.log("after delete: " + customerMarkers);
+            }
+            id = 0;
+        }
+        $('#skillModal').modal('show');
     }
 });
 
@@ -121,11 +289,9 @@ $('#loginGetStartedButton').on('click', function(e) {
 objectSocket.on('dbErr', function(objectData) {
     if (objectData.clientError === "emailExists") {
         alert("Sorry, we already have someone with that email. Is it you?");
-        $('#signupModal').modal('show');
     }
     else if (objectData.clientError === "noRecordLogin") {
         alert("No record found. Please sign up in first.");
-        $('#loginModal').modal('hide');
         $('#signupModal').modal('show');
     }
     else if (objectData.clientError === "invalidPassword"){
@@ -133,7 +299,6 @@ objectSocket.on('dbErr', function(objectData) {
     }
     else if (objectData.clientError === "unknown") {
         alert(objectData.clientError.msg);
-        $('#loginModal').modal('hide');
     }
 });
 
@@ -143,15 +308,17 @@ objectSocket.on('dbErr', function(objectData) {
  */
 objectSocket.on('loginSuccess', function(objectData) {
     $('#navWelcome').text("Welcome " + objectData.name);
-    $('#navSignInButton').text("Sign out");
+    $('#navSignOutButton').prop('disabled', false);
     $('#header').slideUp();
     customerId = objectData.id;
+    $('#mapSubmitButton').prop('disabled', false);
 });
 
 objectSocket.on('logout', function () {
-    $('#navWelcome').text("welcome ");
-    $('#navSignInButton').text("Sign in");
-    $('#header').slideDown();
+    // $('#navWelcome').text("welcome ");
+    //     // //$('#navSignOutButton').prop('disabled', true);
+    //     // $('#header').slideDown();
+    //window.location.reload();
 })
 
 
@@ -166,7 +333,9 @@ objectSocket.on('pinContentResponse', function (objectData) {
         "\nEmail: " + objectData.email;
 
     var myLatLng = {lat: lturl, lng: lngurl};
-    addMarker(myLatLng, contentString)
+
+
+    addMarker(myLatLng, contentString, "customer");
 
     $('#skillModal').modal('hide');
 
@@ -176,24 +345,53 @@ objectSocket.on('pinContentResponse', function (objectData) {
  * Load pins to map
  */
 objectSocket.on('pinData', function (objectData) {
+    while (objectData.length > 0) {
+        var pin = objectData.pop();
 
-    for (var i=0; i <objectData.length; i++) {
-        //Create Content
+
+        var pinLatLng = {lat:pin.lat, lng:pin.lng};
+
+
+        //TODO: This should be on id can't get query to work from the map_load function
+        if (pin.name !== customerName) {
+            $('#infoWindowName').val(pin.name);
+            $('#infoWindowExperience').val(pin.skill);
+            $('#infoWindowGender').val(pin.gender);
+            $('#infoWindowEmail').val(pin.email);
+
+            addMarker(pinLatLng, contentString, "");
+        }
     }
-
 })
 
 
 //++++++++++++++++++++++++++Map Render++++++++++++++++++++++++++++++++++++++
 //  Based on: https://gist.github.com/woodwardtw/186b8633df8583d86f36
 
-
+/**
+ * Submits pins for customers sport of choice
+ */
 $('#mapSubmitButton').on('click', function(e) {
-    $('#skillModal').modal('show');
+    var latLngs = [];
+    for (var i = 0; i < Object.keys(customerMarkers).length; i ++) {
+        marker =  marker = customerMarkers[i.toString()];
+        latLngs.push(marker.position);
+    }
+
+    objectSocket.emit("clientInfoRequest", {id: customerId, latLngs: latLngs, skill: skillLevel, sport: currentSport});
+
+    objectSocket.emit('map_load', {sport: currentSport});
 });
 
 $('#skillSubmit').on('click', function(e) {
-    objectSocket.emit("clientInfoRequest", {id: customerId, lat: lturl, long: lngurl, skill: $('#skillSelect :selected').val(), sport: currentSport});
+    skillLevel = $('#skillSelect :selected').val();
+    $('#skillModal').modal('hide');
+
+    //TODO: Add other filters so that customer can select opponenent
+    //Clear pins before reloading map.
+
+
+   //
 });
 
 
@@ -245,6 +443,32 @@ function initialize() {
                 document.getElementById("linkurl").href=linkurl;
             });
 
+            google.maps.event.addListener(marker, "dblclick", function() {
+                lturl = marker.getPosition().lat();
+                lngurl = marker.getPosition().lng();
+                linkurl = baseurl.concat(lturl, comma, lngurl);
+                document.getElementById("linkurl").href=linkurl;
+
+                //get pin info from server but only if skill level is defined (i.e. sport has been selected)
+                if (skillLevel !== undefined) {
+                    if (Object.keys(customerMarkers).length > 2) {
+                        alert("3 markers is all you get for one sport")
+                    }
+                    else {
+                        var latLng = {lat: lturl, lng: lngurl}
+                        // objectSocket.emit("clientInfoRequest",
+                        //     {id: customerId, lat: lturl, lng: lngurl, skill: skillLevel, sport: currentSport});
+                        addMarker(latLng, "", "customer")
+                    }
+
+                }
+                else {
+                    alert("Select sport to get started.")
+                }
+            });
+
+
+
 
 
             map.setCenter(pos);
@@ -255,6 +479,8 @@ function initialize() {
         // Browser doesn't support Geolocation
         handleNoGeolocation(false);
     }
+
+
 
 }
 
