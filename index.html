@@ -22,7 +22,7 @@
       }
 
       #map-canvas {
-        height: 500px;
+        height: 600px;
         width: 100%;
         margin: 0px;
         padding: 0px
@@ -45,8 +45,32 @@
         width: 100px;
       }
 
+      #bottomOfIntro {
+        margin-bottom: 40px;
+        color: #c82333;
+      }
+
+      #sportSelectRow {
+        margin-bottom: 40px;
+      }
+
+      #instructionsButton {
+        float: right;
+        vertical-align: center;
+        margin-left: 20px;
+
+      }
+
+      #instructionsCloseButton {
+        float: right;
+      }
 
 
+      #instructionsBox {
+        border:1px solid black;
+        margin-bottom: 100px;
+        padding: 20px;
+      }
 
 
     </style>
@@ -70,7 +94,7 @@
           <li class="nav-item"> <a class="nav-link disabled" href="#">Disabled</a> </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <p id="navWelcome" style="margin-right:20px; margin-top:10px">welcome</p>
+          <p id="navWelcome" style="margin-right:20px; margin-top:10px"></p>
           <button id="navSignOutButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" style="margin-right:10px; opacity:.3" disabled>Sign-out</button>
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -82,8 +106,9 @@
         <div class="container">
           <div class="row">
             <div class="col-12">
-              <h1 class="text-center">Lorem ipsum dolor sit amet</h1>
-              <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, dicta, cupiditate consequatur necessitatibus quos libero eius ipsum qui sit molestiae.</p>
+              <h1 class="text-center"><b>LETS PLAY!</b></h1>
+              <h2 class="text-center">A new way to connect with your next opponent!</h2>
+              <h3 id="bottomOfIntro" class="text-center">Sign in or sign up to get started.</h3>
 
             </div>
           </div>
@@ -119,165 +144,178 @@
           </div>
         </div>
       </div>
-      <div class="container ">
-        <div class="row">
+      <div class="container " >
+        <div class="row" id="sportSelectRow">
           <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img id="tennisImgButton" class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <img id="tennisImgButton" class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="images/tennis-2025095__340.png" data-holder-rendered="true">
             <h2>Tennis</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           </div>
           <div id="ping-pongImgButton" class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="images/index.jpg" data-holder-rendered="true">
             <h2>Ping-pong</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           </div>
           <div id="squashImgButton" class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="140X140.gif" data-holder-rendered="true">
+            <img class="rounded-circle" alt="140x140" style="width: 140px; height: 140px;" src="images/squash-540.jpg" data-holder-rendered="true">
             <h2>Squash</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           </div>
         </div>
 
         <!--map canvas-->
         <div class="row" id="mapRow">
-          <div id="map-canvas"  ></div>
+          <div id="map-canvas"  style="margin-bottom: 20px"></div>
+
         </div>
 
         <div id="latbox"></div>
         <div id="longbox"></div>
         <!--end map canvas-->
 
-
-        <div class="row">
+        <div class="row" >
           <div >
             <button id="mapSubmitButton" type="button" class="btn btn-primary" disabled>Submit Locations</button>
+            <button id="instructionsButton" type="button" class="btn btn-outline-success my-2 my-sm-0" >Instructions</button>
           </div>
+
         </div>
-        <div class="row">
-          <div class="col-sm-12 mt-4 mb-2 text-left">
-            <div class="main">
-              <h2>Instructions</h2>
-              <p>If you allowed the site access to your location, you should see it indicated above with a red arrow. If you said no but want to change your mind just click <a href="http://augmenting.me/water/mapit.html">here</a> and choose "Yes" when prompted.</p>
-              <p>
-                You can drag
-                the arrow around if you need to adjust the location. Once you get it in the right place, click on the button below to start submitting your water quality information.</p>
-              <a  id="linkurl" class="btn" href="http://augmenting.me">NEXT</a>
+        <div id="instructionRow" class="row" style="visibility:hidden">
+          <div class="col-sm-12 col-md-8 col-lg-8 mt-4 mb-2 text-left">
+            <div id="instructionsBox" class="main">
+              <span>
+                <h2>
+                  Instructions
+                  <button id="instructionsCloseButton" type="button" class="btn btn-outline-secondary my-2 my-sm-0" >Close</button>
+                </h2>
+              </span>
+              <p>1. Sign in if you haven't already.</p>
+              <br>
+              <p>2. Select the sport spot you wish to play.</p>
+              <br>
+              <p>3. Click and drag the big obnoxious marker to a location you want to play and double click on the marker to place a pin. You may select up to three locations.</p>
+              <br>
+              <p>4. When you are done picking your location(s), click on the submit locations button near the bottom left corner of the map.</p>
+              <br>
+              <p>5. Markers will appear on the for at locations prospective opponents have chosen. You can look at their information including contact email by clicking on the marker.</p>
+              <br>
+              <p>6. Select an opponent and send them an email invitation.</p>
+              <br>
+              <p>An additional feature will be to add</p>
+
             </div>
+
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6 col-lg-6">
-            <blockquote class="blockquote">
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
-            </blockquote>
-          </div>
-          <div class="col-sm-6 col-lg-6">
-            <blockquote class="blockquote">
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
-            </blockquote>
-          </div>
-          <div class="col-sm-6 col-lg-6">
-            <blockquote class="blockquote">
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
-            </blockquote>
-          </div>
-          <div class="col-sm-6 col-lg-6">
-            <blockquote class="blockquote">
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-              <small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> 
-            </blockquote>
-          </div>
-        </div>
+        <!--<div class="row" style="visibility:hidden">-->
+          <!--<div class="col-sm-6 col-lg-6">-->
+            <!--<blockquote class="blockquote">-->
+              <!--<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>-->
+              <!--<small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+            <!--</blockquote>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-6">-->
+            <!--<blockquote class="blockquote">-->
+              <!--<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>-->
+              <!--<small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+            <!--</blockquote>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-6">-->
+            <!--<blockquote class="blockquote">-->
+              <!--<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>-->
+              <!--<small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+            <!--</blockquote>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-6">-->
+            <!--<blockquote class="blockquote">-->
+              <!--<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>-->
+              <!--<small class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+            <!--</blockquote>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
-      <div class="jumbotron">
-        <div class="container">
-          <div class="row">
-            <div class="text-center col-md-8 col-12 mx-auto">
-              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, praesentium, autem, veritatis error quidem eos fuga atque asperiores magnam deleniti necessitatibus sequi</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4 col-auto mx-auto"> <a class="btn btn-block btn-lg btn-success" href="#" title="">Sign up now!</a> </div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-12 mb-2 text-center">
-            <h2>OUR SERVICES</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 col-lg-4">
-            <h3>Feature Description</h3>
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt impedit est voluptatem doloremque architecto corporis suscipit quidem ratione! Quis laborum nam optio dolorem doloremque ex nobis quibusdam ad quo dolores? </p>
-            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
-          </div>
-          <div class="col-sm-6 col-lg-4">
-            <h3>Feature Description</h3>
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate, illo, libero esse assumenda culpa consequatur exercitationem beatae odio praesentium nihil iste ipsum reiciendis pariatur. Recusandae, reiciendis quidem eaque aut ab. </p>
-            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
-          </div>
-          <div class="col-sm-6 col-lg-4">
-            <h3>Feature Description</h3>
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, adipisci recusandae veniam laudantium distinctio temporibus eveniet dolorum earum iusto veritatis provident ducimus minima dolore quas vel omnis cumque voluptas quibusdam.</p>
-            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
-          </div>
-          <div class="col-sm-6 col-lg-4">
-            <h3>Feature Description</h3>
-            <p> <em class="icon-desktop "></em> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, earum rem nostrum provident repellat inventore laborum deleniti quas facere Quasi impedit autem qui cupiditate modi vero vitae dolorum nisi explicabo ea dolores animi. Inventore, omnis.</p>
-            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
-          </div>
-          <div class="col-sm-6 col-lg-4">
-            <h3>Feature Description</h3>
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, iure, perspiciatis, ab ad quia animi esse repudiandae tempore quisquam dolorem sequi voluptatum qui fugiat. Quasi impedit autem qui cupiditate iusto?</p>
-            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
-          </div>
-          <div class="col-sm-6 col-lg-4">
-            <h3>Feature Description</h3>
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, aut, hic laudantium reprehenderit sapiente nemo consequatur corrupti accusantium! Hic, non rerum nihil reprehenderit excepturi explicabo error tempore aliquam eveniet odit.</p>
-            <p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-8 mx-auto">
-          <div class="jumbotron">
-            <div class="row text-center">
-              <div class="text-center col-12">
-                <h2>Request a free quote</h2>
-              </div>
-              <div class="text-center col-12">
-                 CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form
-                <form id="feedbackForm" class="text-center">
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" aria-describedby="nameHelp">
-                    <span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>
-                  </div>
-                  <div class="form-group">
-                    <label for="email">E-Mail</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" aria-describedby="emailHelp">
-                    <span id="emailHelp" class="form-text text-muted" style="display: none;">Please enter a valid e-mail address.</span>
-                  </div>
-                  <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea rows="10" cols="100" class="form-control" id="message" name="message" placeholder="Message" aria-describedby="messageHelp"></textarea>
-                    <span id="messageHelp" class="form-text text-muted" style="display: none;">Please enter a message.</span>
-                  </div>
-                  <button type="submit" id="feedbackSubmit" class="btn btn-primary btn-lg"> Send</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <!--<div class="jumbotron" style="visibility:hidden">-->
+        <!--<div class="container">-->
+          <!--<div class="row">-->
+            <!--<div class="text-center col-md-8 col-12 mx-auto">-->
+              <!--<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, praesentium, autem, veritatis error quidem eos fuga atque asperiores magnam deleniti necessitatibus sequi</p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="row">-->
+            <!--<div class="col-sm-4 col-auto mx-auto"> <a class="btn btn-block btn-lg btn-success" href="#" title="">Sign up now!</a> </div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="container" style="visibility:hidden">-->
+        <!--<div class="row">-->
+          <!--<div class="col-12 mb-2 text-center">-->
+            <!--<h2>OUR SERVICES</h2>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+          <!--<div class="col-sm-6 col-lg-4">-->
+            <!--<h3>Feature Description</h3>-->
+            <!--<p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-4">-->
+            <!--<h3>Feature Description</h3>-->
+            <!--<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate, illo, libero esse assumenda culpa consequatur exercitationem beatae odio praesentium nihil iste ipsum reiciendis pariatur. Recusandae, reiciendis quidem eaque aut ab. </p>-->
+            <!--<p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-4">-->
+            <!--<h3>Feature Description</h3>-->
+            <!--<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, adipisci recusandae veniam laudantium distinctio temporibus eveniet dolorum earum iusto veritatis provident ducimus minima dolore quas vel omnis cumque voluptas quibusdam.</p>-->
+            <!--<p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-4">-->
+            <!--<h3>Feature Description</h3>-->
+            <!--<p> <em class="icon-desktop "></em> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, earum rem nostrum provident repellat inventore laborum deleniti quas facere Quasi impedit autem qui cupiditate modi vero vitae dolorum nisi explicabo ea dolores animi. Inventore, omnis.</p>-->
+            <!--<p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-4">-->
+            <!--<h3>Feature Description</h3>-->
+            <!--<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, iure, perspiciatis, ab ad quia animi esse repudiandae tempore quisquam dolorem sequi voluptatum qui fugiat. Quasi impedit autem qui cupiditate iusto?</p>-->
+            <!--<p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>-->
+          <!--</div>-->
+          <!--<div class="col-sm-6 col-lg-4">-->
+            <!--<h3>Feature Description</h3>-->
+            <!--<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, aut, hic laudantium reprehenderit sapiente nemo consequatur corrupti accusantium! Hic, non rerum nihil reprehenderit excepturi explicabo error tempore aliquam eveniet odit.</p>-->
+            <!--<p><a class="btn btn-link" href="http://www.adobe.com">View details »</a></p>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</section>-->
+    <!--<div class="container" style="visibility:hidden">-->
+      <!--<div class="row">-->
+        <!--<div class="col-12 col-md-8 mx-auto">-->
+          <!--<div class="jumbotron">-->
+            <!--<div class="row text-center">-->
+              <!--<div class="text-center col-12">-->
+                <!--<h2>Request a free quote</h2>-->
+              <!--</div>-->
+              <!--<div class="text-center col-12">-->
+                 <!--CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form-->
+                <!--<form id="feedbackForm" class="text-center">-->
+                  <!--<div class="form-group">-->
+                    <!--<label for="name">Name</label>-->
+                    <!--<input type="text" class="form-control" id="name" name="name" placeholder="Name" aria-describedby="nameHelp">-->
+                    <!--<span id="nameHelp" class="form-text text-muted" style="display: none;">Please enter your name.</span>-->
+                  <!--</div>-->
+                  <!--<div class="form-group">-->
+                    <!--<label for="email">E-Mail</label>-->
+                    <!--<input type="email" class="form-control" id="email" name="email" placeholder="Email Address" aria-describedby="emailHelp">-->
+                    <!--<span id="emailHelp" class="form-text text-muted" style="display: none;">Please enter a valid e-mail address.</span>-->
+                  <!--</div>-->
+                  <!--<div class="form-group">-->
+                    <!--<label for="message">Message</label>-->
+                    <!--<textarea rows="10" cols="100" class="form-control" id="message" name="message" placeholder="Message" aria-describedby="messageHelp"></textarea>-->
+                    <!--<span id="messageHelp" class="form-text text-muted" style="display: none;">Please enter a message.</span>-->
+                  <!--</div>-->
+                  <!--<button type="submit" id="feedbackSubmit" class="btn btn-primary btn-lg"> Send</button>-->
+                <!--</form>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <!--end login original-->
 

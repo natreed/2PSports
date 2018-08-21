@@ -195,29 +195,6 @@ io.on('connection', function(objectSocket) {
                 });
         }
 
-        //Send info back to client to create info window
-        let sql = "SELECT name, gender, email  FROM customerInfo " +
-            "WHERE id = :id";
-
-        db.get(sql,
-            {
-                ':id': objectData.id
-            },
-            (err, row) => {
-                if (err) {
-                    io.emit('dbErr', {clientError: "unknown", msg: err.message});
-                }
-                else {
-                    // var sl = 'select * from pins';
-                    // db.all(sl, [], (err, rows) => {
-                    //     console.log(rows);
-                    // })
-
-                    var data = {id: objectData.id , name: row.name, gender: row.gender, email: row.email, sport: objectData.sport, skill: objectData.skill};
-                    console.log(data);
-                    io.emit('pinContentResponse', data);
-                }
-            });
         db.close();
 
     });

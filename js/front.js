@@ -124,6 +124,8 @@ $('#signupGetStartedButton').on('click', function(e) {
         longtitude:null
     }
 
+
+
     //$('#loginModal').modal('show');
     objectSocket.emit('signup', signupData);
 });
@@ -275,6 +277,24 @@ $('#squashImgButton').on('click', function(e) {
     }
 });
 
+$('#instructionsButton').on('click', function(e) {
+    if (e) {
+        console.log(e.message);
+    }
+    $('#instructionRow').css('visibility', 'visible');
+
+});
+
+$('#instructionsCloseButton').on('click', function(e) {
+    if (e) {
+        console.log(e.message);
+    }
+    $('#instructionRow').css('visibility', 'hidden');
+
+});
+
+
+
 
 //++++++++++++++++++++++++Handlers++++++++++++++++++++++++++++++++
 
@@ -302,10 +322,11 @@ objectSocket.on('dbErr', function(objectData) {
  * Adds client name to header, changes sign in button to sign out button.
  */
 objectSocket.on('loginSuccess', function(objectData) {
-    $('#navWelcome').text("Welcome " + objectData.name);
+    $('#navWelcome').text("hello " + objectData.name);
     $('#navSignOutButton').prop('disabled', false);
     $('#header').slideUp();
     customerId = objectData.id;
+    customerName = objectData.name;
     $('#mapSubmitButton').prop('disabled', false);
 });
 
@@ -316,25 +337,6 @@ objectSocket.on('logout', function () {
     //window.location.reload();
 })
 
-
-/**
- * Pin information for clients own pins
- */
-objectSocket.on('pinContentResponse', function (objectData) {
-    var contentString = "Name: " + objectData.name +
-        "\nSport: " + objectData.sport +
-        "\nGender: " + objectData.gender +
-        "\nSkill: " + objectData.skill +
-        "\nEmail: " + objectData.email;
-
-    var myLatLng = {lat: lturl, lng: lngurl};
-
-
-    addMarker(myLatLng, contentString, "customer");
-
-    $('#skillModal').modal('hide');
-
-})
 
 /**
  * Load pins to map
@@ -440,7 +442,6 @@ function initialize() {
             lturl=marker.getPosition().lat();
             lngurl=marker.getPosition().lng();
             linkurl=baseurl.concat(lturl,comma,lngurl);
-            document.getElementById("linkurl").href=linkurl;
 
             //gets the new latlong if the marker is dragged
             google.maps.event.addListener(marker, "drag", function(){
@@ -449,14 +450,12 @@ function initialize() {
                 lturl=marker.getPosition().lat();
                 lngurl=marker.getPosition().lng();
                 linkurl=baseurl.concat(lturl,comma,lngurl);
-                document.getElementById("linkurl").href=linkurl;
             });
 
             google.maps.event.addListener(marker, "dblclick", function() {
                 lturl = marker.getPosition().lat();
                 lngurl = marker.getPosition().lng();
                 linkurl = baseurl.concat(lturl, comma, lngurl);
-                document.getElementById("linkurl").href=linkurl;
 
                 //get pin info from server but only if skill level is defined (i.e. sport has been selected)
                 if (skillLevel !== undefined) {
@@ -511,9 +510,5 @@ function handleNoGeolocation(errorFlag) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-
-
-
 
 
