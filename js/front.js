@@ -42,11 +42,6 @@ var addMarker = function (latLng, infoBoxText, markerGroup) {
             draggable: true,
             zIndex: google.maps.Marker.MAX_ZINDEX + 1,
             animation: google.maps.Animation.DROP,
-            infoWindow: {
-                maxWidth: 400,
-                content: ""
-
-            },
             icon: image
         });
 
@@ -82,7 +77,7 @@ var addMarker = function (latLng, infoBoxText, markerGroup) {
         map.panTo(latLng);
 
         markers[id] = marker;
-        marker.addListener('doublclick', function() {
+        marker.addListener('click', function() {
             infowindow.open(map, marker);
         })
 
@@ -348,18 +343,32 @@ objectSocket.on('pinData', function (objectData) {
     while (objectData.length > 0) {
         var pin = objectData.pop();
 
-
         var pinLatLng = {lat:pin.lat, lng:pin.lng};
-
 
         //TODO: This should be on id can't get query to work from the map_load function
         if (pin.name !== customerName) {
-            $('#infoWindowName').val(pin.name);
-            $('#infoWindowExperience').val(pin.skill);
-            $('#infoWindowGender').val(pin.gender);
-            $('#infoWindowEmail').val(pin.email);
+            //Update div infoWindow from index.html
 
-            addMarker(pinLatLng, contentString, "");
+            var divContent = "<div>" +
+                "  <h2>" + pin.name + "</h2>" +
+                "  <br>" +
+                "  <br>" +
+                "  <p>" + "Skill Level: " + pin.skill + "</p>" +
+                "  <br>" +
+                "  <br>" +
+                "  <p>" + "Gender: " + pin.gender + "</p>" +
+                "  <br>" +
+                "  <br>" +
+                "  <p>" + "Contact Email: " +  pin.email + "</p>" +
+                "  <br>" +
+                "  <br>" +
+                "  <p></p>\n" +
+                "\n" +
+                "\n" +
+                "</div>";
+
+                console.log(divContent);
+            addMarker(pinLatLng, divContent, "");
         }
     }
 })
