@@ -8,6 +8,15 @@ Currently a platform for people seeking opponents for tennis, ping pong or squas
 
 The UI was created from a Dreamweaver enterprise template recommended by a friend. The enterprise template was designed with bootstrap 4 and the layout is attractive and very approachable.
 
+## Requirements:
+- Node 10.6.v
+
+## Deploy and run:
+- Clone Repository: git clone https://github.com/natreed/2PSports
+- cd 2PSports/js
+- node expressServer.js
+- go to the url given at the prompt http://localhost:8080/index.html
+
 ## Front End: 
 When a user signs in, a session is created and the sign in div is collapsed leaving the map and the sport icons that can be selected. A welcome message to the user appears in the header and the sign out button is activated. When the sign out button is clicked. The page refreshes completely and all state is lost. If the user has selected a sport, they may place up to three pins on the map at locations where they would like to play.  
 
