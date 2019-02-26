@@ -4,7 +4,7 @@
 
 ## Overview:
 
-This web app is currently a platform for people seeking opponents for tennis, ping pong or squash.  Users sign in, choose a sport and pick their choice of locations by dragging a marker around the map and placing pins. Pins of potential opponents for their sport of choice are made visible. The user can then click on a pin to get more information about their prospective opponent. This includes, name, gender, experience level, available times and a contact email. After a choice is made they may contact the  other person by email or wait for someone to contact them.
+Currently a platform for people seeking opponents for tennis, ping pong or squash.  Users sign in, choose a sport and pick their choice of locations by dragging a marker around the map and placing pins. Pins of potential opponents for their sport of choice are made visible. The user can then click on a pin to get more information about their prospective opponent. This includes, name, gender, experience level, available times and a contact email. After a choice is made they may contact the  other person by email or wait for someone to contact them.
 
 The UI was created from a Dreamweaver enterprise template recommended by a friend. The enterprise template was designed with bootstrap 4 and the layout is very approachable to a novice.
 
