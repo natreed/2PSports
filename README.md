@@ -6,7 +6,7 @@
 
 Currently a platform for people seeking opponents for tennis, ping pong or squash.  Users sign in, choose a sport and pick their choice of locations by dragging a marker around the map and placing pins. Pins of potential opponents for their sport of choice are made visible. The user can then click on a pin to get more information about their prospective opponent. This includes, name, gender, experience level, available times and a contact email. After a choice is made they may contact the  other person by email or wait for someone to contact them.
 
-The UI was created from a Dreamweaver enterprise template recommended by a friend. The enterprise template was designed with bootstrap 4 and the layout is very approachable to a novice.
+The UI was created from a Dreamweaver enterprise template recommended by a friend. The enterprise template was designed with bootstrap 4 and the layout is attractive and very approachable.
 
 ## Front End: 
 When a user signs in, a session is created and the sign in div is collapsed leaving the map and the sport icons that can be selected. A welcome message to the user appears in the header and the sign out button is activated. When the sign out button is clicked. The page refreshes completely and all state is lost. If the user has selected a sport, they may place up to three pins on the map at locations where they would like to play.  
